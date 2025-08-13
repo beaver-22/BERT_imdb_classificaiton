@@ -1,0 +1,33 @@
+# Core Deep Learning/NLP
+torch==2.5.1+cu121
+torchvision==0.20.1+cu121
+torchaudio==2.7.0+cu128
+transformers==4.55.0
+tokenizers==0.21.4
+datasets==4.0.0
+omegaconf==2.3.0
+
+# Data Handling/Science
+numpy==2.2.5
+pandas==2.3.1
+scikit-learn==1.7.1
+scipy==1.16.1
+
+# Utility
+tqdm==4.67.1
+pyyaml==6.0.2
+requests==2.32.3
+joblib==1.5.1
+typing-extensions==4.13.2
+
+# Visualization
+matplotlib==3.10.3
+seaborn==0.13.2
+
+# Experiment logging
+wandb==0.21.0
+
+# Additional (optional, but common for NLP/matching recipe)
+huggingface-hub==0.34.3
+filelock==3.18.0
+

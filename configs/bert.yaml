@@ -1,0 +1,133 @@
+# ------------------------------
+# 모델 관련 설정
+# ------------------------------
+model:
+  pretrained_name: bert-base-uncased   # 또는 ModernBERT-base
+  num_labels: 2                        # IMDB는 긍·부정 두 클래스
+  dropout: 0.1                         # 분류 헤드 dropout 확률
+
+
+# ------------------------------
+# 데이터 경로 및 전처리
+# ------------------------------
+data:
+  pretrained_name: bert-base-uncased   # 또는 ModernBERT-base
+  dataset_name: stanfordnlp/imdb       # 🤗 Hub 이름
+  max_len: 128                         # 토큰 최대 길이 대략 85.3%가 커버됨
+  split_ratio: [0.8, 0.1, 0.1]       # train/val/test 비율
+  seed: 42                             # 데이터 셔플 재현성
+
+
+# ------------------------------
+# 학습 하이퍼파라미터
+# ------------------------------
+train:
+  batch_size: 128
+  num_epochs: 5
+  lr: 5e-5
+  optimizer: adam                     # 규칙상 Adam 사용
+  scheduler: constant
+  grad_clip: 1.0                       # 선택: gradient clipping
+
+
+# ------------------------------
+# Validation 및 평가 설정
+# ------------------------------
+validation:
+  eval_strategy: epoch                 # 매 epoch마다 평가
+  eval_steps: null                     # epoch 기준이므로 null
+  metric_for_best_model: eval_accuracy # 최고 모델 선택 기준
+  greater_is_better: true              # accuracy는 클수록 좋음
+  load_best_model_at_end: true         # 학습 완료 후 최고 모델 로드
+  
+  # 평가 중 사용할 메트릭들
+  metrics:
+    - accuracy
+    - f1
+    - precision 
+    - recall
+
+
+# ------------------------------
+# 체크포인트 & 모델 저장
+# ------------------------------
+checkpointing:
+  save_strategy: epoch                 # 매 epoch마다 저장
+  save_steps: null                     # epoch 기준이므로 null
+  save_only_best: false               # 모든 epoch 저장 (나중에 선택 가능)
+  save_total_limit: 3                  # 최대 3개 체크포인트만 유지
+  
+  # 저장할 파일들
+  save_components:
+    - model                            # 모델 가중치
+    - optimizer                        # 옵티마이저 상태
+    - scheduler                        # 스케줄러 상태
+    - tokenizer                        # 토크나이저
+    - training_args                    # 학습 설정
+  
+  # 파일 이름 형식
+  output_dir: checkpoints/imdb-bert
+  checkpoint_name_format: "checkpoint-epoch-{epoch:02d}-acc-{eval_accuracy:.4f}"
+
+
+# ------------------------------
+# 로깅 및 모니터링
+# ------------------------------
+log:
+  # WandB 설정
+  wandb_project: imdb-sentiment
+  wandb_entity: beaver22-seoul-national-university    # 환경변수로 덮어쓰기 권장
+  wandb_name: bert-{timestamp}    # 실험 이름
+  
+  # 로깅 빈도
+  log_strategy: steps                  # 스텝 단위 로깅
+  logging_steps: 100                   # 100 스텝마다 로그
+  
+  # 저장할 로그 정보
+  log_metrics:
+    - train_loss
+    - eval_loss  
+    - eval_accuracy
+    - eval_precision
+    - eval_recall
+    - eval_f1
+    - learning_rate
+    - epoch
+    - step
+  
+  # 로그 파일 저장
+  log_file: logs/training.log
+  log_level: INFO
+
+
+
+# ------------------------------
+# 모델 저장 세부 설정
+# ------------------------------
+model_saving:
+  # Best model 저장
+  save_best_model: true
+  best_model_dir: models/best/
+  best_model_metric: eval_accuracy
+  
+  # Final model 저장  
+  save_final_model: true
+  final_model_dir: models/final/
+  
+  # 중간 체크포인트 자동 정리
+  auto_cleanup: true
+  keep_best_n: 2                       # 상위 2개 모델만 유지
+
+
+# ------------------------------
+# 하드웨어 및 기타
+# ------------------------------
+runtime:
+  device: cuda                         # cpu | cuda
+  fp16: true                           # mixed-precision 학습 여부
+  dataloader_num_workers: 4            # 데이터 로딩 프로세스 수
+  pin_memory: true                     # GPU 메모리 최적화
+  
+  # 재현성 설정
+  seed: 42
+  deterministic: true

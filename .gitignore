@@ -1,0 +1,51 @@
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.egg-info/
+*.egg
+
+# Jupyter/IPython
+*.ipynb
+
+# Environment/IDE
+.env
+.venv
+env/
+venv/
+*.swp
+.DS_Store
+.vscode/
+.idea/
+
+# Dataset/실험 로그/Checkpoints
+data/
+dataset/
+*.csv
+*.tsv
+
+# 모델 및 체크포인트
+checkpoints/
+models/
+*.pt
+*.pth
+
+# wandb 로그/실험 파일
+wandb/
+wandb-debug.log
+wandb-error.log
+
+# Log files
+*.log
+logs/
+log/
+
+# 기타 (사용자에 따라)
+*.tmp
+*.bak
+*.out
+
+# Huggingface 캐시
+cache/
+*.cache
