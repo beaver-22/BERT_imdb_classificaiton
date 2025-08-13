@@ -4,10 +4,6 @@
 **BERT-base-uncased**와 **ModernBERT-base** 사전학습 인코더 모델을 파인튜닝하여 성능을 비교합니다.
 
 ---
-
-
-&nbsp;
-
 ## 🔎 BERT와 ModernBERT의 구조적 차이
 
 | 항목                | BERT-base                  | ModernBERT-base                |
