@@ -4,6 +4,10 @@
 **BERT-base-uncased**와 **ModernBERT-base** 사전학습 인코더 모델을 파인튜닝하여 성능을 비교합니다.
 
 ---
+
+
+
+
 ## 🔎 BERT와 ModernBERT의 구조적 차이
 
 | 항목                | BERT-base                  | ModernBERT-base                |
@@ -17,6 +21,7 @@
 
 
 
+
 ## 📝 실험 환경
 
 - **데이터셋:** IMDb (긍/부정, 총 50,000건)
@@ -26,15 +31,22 @@
     - test: 5,000
 - **입력 최대 길이:** 128 tokens
 - **Epoch:** 5
-- **Batch size** 128(BERT), 64(ModernBERT)
+- **Batch size:** 128 (BERT), 64 (ModernBERT)
 - **Optimizer:** Adam (`lr=5e-5`)
 - **평가 지표:** CrossEntropyLoss, Accuracy (%)
 
 
+
+
 ## 💻 실험 과정
 
+&nbsp;
+
 ### Train Loss
+
 ![Train Loss 그래프](./img/train_loss.png)
+
+&nbsp;
 
 ### Validation 결과
 
@@ -55,6 +67,7 @@
 
 
 
+
 ## 📊 모델별 성능 비교
 
 | 모델명              | Accuracy | Precision | Recall  | F1-score | 비고               |
@@ -65,29 +78,38 @@
 - **BERT-base:**
     - IMDb 감성분류에서 89%의 정확도와 고른 정밀도·재현율·F1을 기록.
     - 실무, 논문 벤치마크에서 “표준적”이고 안정적인 성능으로 평가됨.
+
 - **ModernBERT-base:**
     - 모든 평가 지표(정확도·정밀도·재현율·F1)에서 BERT-base를 명확히 상회.
     - F1-score가 92% 이상으로, 다양하고 어려운 리뷰 분류 상황에서도 robust 함을 입증.
 
 
 
+
 ## 🚩 핵심 분석: 어느 모델이 더 나은가?
 
 - **ModernBERT-base**가 모든 주요 지표(Accuracy, Precision, Recall, F1 등)에서 **더 우수한 성능**을 달성했습니다.
-    - *정확도*는 약 **2.4%p** 더 높음 (0.9148 vs 0.8900).
-    - *F1-score* 역시 **2.47%p** 개선 (0.9167 vs 0.8920) 되어,
-      실제 분류 실무에서 “오분류가 줄고, 긍/부정 모두를 잘 잡아냄”을 의미.
+    - *정확도*는 약 **2.4%p** 더 높음 (**0.9148** vs **0.8900**).
+    - *F1-score* 역시 **2.47%p** 개선 (**0.9167** vs **0.8920**)되어,
+      실제 분류 실무에서 “오분류가 줄고, 긍/부정 모두를 잘 잡아냄”을 의미합니다.
     - 정밀도·재현율도 모두 ModernBERT에서 높게 나옴.
 
 - **결론:**  
   > **ModernBERT-base는 BERT-base의 모든 분류 성능 지표에서 더 나은 결과를 보였으며, IMDb 감성분류 같은 실제 업무에서 더 효과적인 선택이 될 수 있습니다.**  
   > 최신 Pretrained Encoder의 구조적 개선이 실제 성능 향상으로 연결되는 것을 실험적으로 확인했습니다.
 
-- **실험 시 유의사항:**
-    - **token_type_ids**는 ModernBERT에서 사용되지 않고 BERT에서만 사용됨을 주의합니다.
-        - **token_type_ids**: BERT에서 두 sequence를 구분하기 위한 임베딩 부분. NSP를 위해 설걔됨
-    - Seed는 항상 42로 고정했으므로, 재현성을 위해 동일한 조건에서 평가를 진행해야합니다.
-    - 모든 파일은 BERT_imdb 경로에서 실행되도록 구성되었습니다.
-    - **utils.py**에서 추가적인 optimizer의 변경 및 수정이 가능하도록 작성되었습니다.
-    - 평가는 실험 후 **src/eval.py**파일을 통해 실행합니다. 해당 파일에 주석을 변경하여 BERT와 ModernBERT에 대한 실험 모두 진행 가능합니다.
+
+
+
+## 📝 실험 시 유의사항
+
+- **token_type_ids**는 ModernBERT에서 사용되지 않고 BERT에서만 사용됨을 주의합니다.
+    - BERT에서 두 sequence를 구분하기 위한 임베딩 부분(NSP를 위해 설계됨)
+- Seed는 항상 42로 고정했으므로, 재현성을 위해 동일한 조건에서 평가를 진행해야 합니다.
+- 모든 파일은 BERT_imdb 경로에서 실행되도록 구성되었습니다.
+- **utils.py**에서 추가적인 optimizer의 변경 및 수정이 가능하도록 작성되었습니다.
+- 평가는 실험 후 **src/eval.py** 파일을 통해 실행합니다.
+    - 해당 파일의 주석을 변경하여 BERT와 ModernBERT 각각 실험이 가능합니다.
+
+
 
