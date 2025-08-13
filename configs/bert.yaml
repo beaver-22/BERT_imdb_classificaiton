@@ -22,7 +22,7 @@ data:
 # 학습 하이퍼파라미터
 # ------------------------------
 train:
-  batch_size: 128
+  batch_size: 64
   num_epochs: 5
   lr: 5e-5
   optimizer: adam                     # 규칙상 Adam 사용

@@ -25,7 +25,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = EncoderForClassification(configs.model).to(device)
 
 # 저장된 모델 불러오기
-model_path = "../BERT_imdb/checkpoints/imdb-bert/checkpoint-epoch-05-acc-0.8846.pt"  # 또는 원하는 경로
+model_path = "../BERT_imdb/checkpoints/imdb-bert/checkpoint-epoch-05-acc-0.8908.pt"  # 또는 원하는 경로
 # model_path = "../BERT_imdb/checkpoints/imdb-modernbert/checkpoint-epoch-05-acc-0.9092.pt"
 checkpoint = torch.load(model_path, map_location=device)
 model.load_state_dict(checkpoint['model_state_dict'])
