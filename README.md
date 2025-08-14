@@ -69,24 +69,24 @@
     - 실무, 논문 벤치마크에서 “표준적”이고 안정적인 성능으로 평가됨.
 
 - **ModernBERT-base:**
-    - 모든 평가 지표(정확도·정밀도·재현율·F1)에서 BERT-base를 명확히 상회.
-    - F1-score가 92% 이상으로, 다양하고 어려운 리뷰 분류 상황에서도 robust 함을 입증.
+    - 모든 평가 지표(정확도·정밀도·재현율·F1)에서 BERT-base를 상회.
+    - F1-score가 92% 이상으로 단순한 classification head 부착 구조에서도 높은 정확도를 보임
 
 
 
 &nbsp;
 ## 🚩 핵심 분석: 어느 모델이 더 나은가?
 
-- **ModernBERT-base**가 모든 주요 지표(Accuracy, Precision, Recall, F1-score 등)에서 **더 우수한 성능**을 달성했습니다.
+- **ModernBERT-base**가 모든 주요 지표(Accuracy, Precision, Recall, F1-score 등)에서 **상대적으로 우수한 성능**을 달성했습니다.
     - *Accuracy*는 약 **2.16%p** 더 높음 (**0.9148** vs **0.8932**).
-    - *F1-score* 역시 **2.11%p** 개선 (**0.9167** vs **0.8956**)되어,
-      실제 분류 실무에서 “오분류가 줄고, 긍/부정 모두를 잘 잡아냄”을 의미합니다.
+    - *F1-score* 역시 **2.11%p** 개선 (**0.9167** vs **0.8956**)
     - Precision, Recall도 ModernBERT에서 각각 더 높음
       - Precision: 0.9085 vs 0.8876 (+2.09%p)
       - Recall: 0.9250 vs 0.9037 (+2.13%p)
+    - **그럼에도, 두 모델 간 성능 격차가 크지 않고, modernBERT의 모델 사이즈가 더 큰 점을 고려할 때 상황에 맞게 모델을 취사 선택할 필요가 있어 보입니다.**
 
 - **결론:**  
-  > **ModernBERT-base는 BERT-base의 모든 분류 성능 지표에서 더 나은 결과를 보였으며, IMDb 감성분류 같은 실제 업무에서 더 효과적인 선택이 될 수 있습니다.**  
+  > **ModernBERT-base는 BERT-base는 모두 높은 성능을 보였으며, 그 중 ModernBERT-base의 성능이 2% 정도의 우위를 보였습니다. BERT의 모델 사이즈가 더 작기에, 상황에 따라 취사선택하는 것이 가장 효과적인 선택이 될 수 있습니다.**  
   > 최신 Pretrained Encoder의 구조적 개선이 실제 성능 향상으로 연결되는 것을 실험적으로 확인했습니다.
 
 
