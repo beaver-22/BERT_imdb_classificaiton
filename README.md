@@ -27,7 +27,7 @@
     - test: 5,000
 - **입력 최대 길이:** 128 tokens
 - **Epoch:** 5
-- **Batch size:** 128 (BERT), 64 (ModernBERT)
+- **Batch size:** 64
 - **Optimizer:** Adam (`lr=5e-5`)
 - **평가 지표:** CrossEntropyLoss, Accuracy (%)
 
